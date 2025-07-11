@@ -22,9 +22,12 @@ export class AppController {
   }
 
   @Post('create-custom-deeplink')
-  async createDeepLink(@Body() createDeepLinkDto: CreateDeepLinkDto) {
-    const { randomUUID } = new ShortUniqueId({ length: 10 });
-    createDeepLinkDto.path = '/' + randomUUID();
-    return await this.appService.createDeepLink(createDeepLinkDto);
+   createDeepLink(@Body() createDeepLinkDto: CreateDeepLinkDto) {
+    console.log(createDeepLinkDto);
+    
+    // const { randomUUID } = new ShortUniqueId({ length: 10 });
+    // createDeepLinkDto.path = '/' + randomUUID();
+    // return await this.appService.createDeepLink(createDeepLinkDto);
+    return createDeepLinkDto
   }
 }
