@@ -8,6 +8,7 @@ import { IOSAppDetails } from './entity/iosAppdetails.entity';
 import { DefaultDetails } from './entity/default.entity';
 import { Tergets } from './entity/tergets.entity';
 import { DeepLinkPaginationDto } from './dto/paginationDto';
+import { CreateDeepLinkDto } from './dto/create-deeplink.dto';
 
 @Injectable()
 export class AppService {
@@ -71,11 +72,10 @@ export class AppService {
     return '/';
   }
 
-  async createDeepLink(createDeepLinkDto: DeepLink) {
+  async createDeepLink(createDeepLinkDto: CreateDeepLinkDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
-
     try {
       const { android, ios, default: defaultTarget } = createDeepLinkDto.tergets;
 
@@ -91,6 +91,7 @@ export class AppService {
 
       const deepLinkRes = await queryRunner.manager.save(this.deepLinkRepo.target, {
         path: createDeepLinkDto.path,
+        name: createDeepLinkDto.name,
         tergets: tergetRes,
       });
       await queryRunner.commitTransaction();
