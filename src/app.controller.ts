@@ -23,11 +23,11 @@ export class AppController {
     return createDeepLinkDto
   }
 
-  @Get('*')
-  async getDeepLink(@Req() req: Request, @Res() res: Response) {
-    const userAgent = req.headers['user-agent'] || '';
-    const response = await this.appService.getLink(userAgent, req.path);
-    return res.redirect(response);
-  }
+  // @Get('*')
+  // async getDeepLink(@Req() req: Request, @Res() res: Response) {
+  //   const userAgent = req.headers['user-agent'] || '';
+  //   const response = await this.appService.getLink(userAgent, req.path);
+  //   return res.redirect(response);
+  // }
 
 }
