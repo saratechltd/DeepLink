@@ -13,14 +13,6 @@ export class AppController {
   async getDeepLinkwithPagination(@Query() deepLinkPaginationDto: DeepLinkPaginationDto) {
     return await this.appService.findAllDeepLinks(deepLinkPaginationDto);
   }
-
-  @Get('*')
-  async getDeepLink(@Req() req: Request, @Res() res: Response) {
-    const userAgent = req.headers['user-agent'] || '';
-    const response = await this.appService.getLink(userAgent, req.path);
-    return res.redirect(response);
-  }
-
   @Post('create-custom-deeplink')
    createDeepLink(@Body() createDeepLinkDto: CreateDeepLinkDto) {
     console.log(createDeepLinkDto);
@@ -30,4 +22,12 @@ export class AppController {
     // return await this.appService.createDeepLink(createDeepLinkDto);
     return createDeepLinkDto
   }
+
+  @Get('*')
+  async getDeepLink(@Req() req: Request, @Res() res: Response) {
+    const userAgent = req.headers['user-agent'] || '';
+    const response = await this.appService.getLink(userAgent, req.path);
+    return res.redirect(response);
+  }
+
 }
