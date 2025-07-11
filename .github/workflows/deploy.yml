@@ -1,0 +1,27 @@
+name: CI/CD for DeepLink
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 217.15.164.179
+          username: root
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            source ~/.nvm/nvm.sh
+            cd /opt/DeepLink/
+            git pull origin master
+            pm2 delete deeplink || true
+            pm2 start npm --name "deeplink" -- run start
